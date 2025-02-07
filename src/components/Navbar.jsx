@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
+import Orders from "./Orders";
 
 const Navbar = () => {
 
@@ -15,6 +16,11 @@ const Navbar = () => {
     <li><NavLink to="/"> Home</NavLink></li>
     <li><NavLink to="/login">Login</NavLink></li>
     <li><NavLink to="/register">Register</NavLink></li>
+    {
+      user && <>
+      <li><NavLink to='/orders'>Orders</NavLink></li>
+      </>
+    }
     
     </>
     return (
@@ -53,9 +59,13 @@ const Navbar = () => {
         <div className="navbar-end">
 
           {
-            user && <span>{user.email}</span>
+            user ? <>
+            <span>{user.email}</span>
+            <a onClick={handleLogOut} className="btn btn-sm">Sign Out</a>
+            </>
+            : <Link to='/login'><button>Login</button></Link>
           }
-          <a onClick={handleLogOut} className="btn btn-sm">Sign Out</a>
+          
         </div>
       </div>
     );
