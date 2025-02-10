@@ -4,7 +4,7 @@ import { AuthContext } from "../providers/AuthProviders";
 
 const Login = () => {
   const navigate = useNavigate();
-  const {singInUser} = useContext(AuthContext)
+  const {singInUser,singInWithGoogle} = useContext(AuthContext)
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -21,6 +21,16 @@ const Login = () => {
       console.error(error);
     })
   };
+  const handleGoogleSignin =() =>{
+    singInWithGoogle()
+    .then(result =>{
+      console.log(result.user);
+      navigate('/')
+    })
+    .catch(error =>{
+      console.error(error.message);
+    })
+  }
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col ">
@@ -67,6 +77,9 @@ const Login = () => {
             <Link to="/register">
               <button className="btn btn-active btn-link">Register</button>
             </Link>
+          </p>
+          <p>
+            <button onClick={handleGoogleSignin} className="btn btn-ghost">Google</button>
           </p>
         </div>
       </div>
